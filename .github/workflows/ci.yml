@@ -6,7 +6,7 @@ on:
     branches: ["master"]
 
 jobs:
-  unit-tests:
+  deploy-ci:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -30,9 +30,6 @@ jobs:
         run: |
           pytest --cov=src --cov-report=term-missing tests/
   
-  deploy-eks:
-    runs-on: ubuntu-latest
-    steps:
       - name: Checkout code
         uses: actions/checkout@v4
 

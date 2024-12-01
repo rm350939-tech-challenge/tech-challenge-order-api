@@ -54,9 +54,9 @@ jobs:
       - name: Run tox
         run: tox -e py
 
-      - name: Verify coverage report
-        run: cat coverage.xml
-
+      - name: Adicionar scanner ao PATH
+        run: echo "$(pwd)/sonar-scanner/bin" >> $GITHUB_PATH
+        
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@master
         env:

@@ -1,5 +1,5 @@
 [project]
-name = "foodapi-identity"
+name = "foodapi-order"
 version = "1.0.0"
 authors = [
   { name="Jhonatan Eduardo - RM350939", email="jhonatanepp@gmail.com" },

@@ -8,6 +8,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
 
       - name: Set up Python
         uses: actions/setup-python@v4
@@ -26,7 +28,7 @@ jobs:
 
       - name: Running coverage tests with pytest
         run: |
-          pytest --cov=src/domain --cov=src/adapters --cov=src/ports --cov-report=xml:coverage.xml tests/
+          pytest --rootdir=. --cov=src/domain --cov=src/adapters --cov=src/ports --cov-report=xml:coverage.xml tests/
       
       - name: SonarQube Scan
         uses: sonarsource/sonarqube-scan-action@master

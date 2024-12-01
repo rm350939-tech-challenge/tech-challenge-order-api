@@ -84,7 +84,7 @@ class OrderRepository(OrderRepositoryInterface):
     def create(self, order_entity: OrderEntity) -> OrderEntity:
         order = OrderModel.create(
             number=order_entity.number,
-            customer=order_entity.customer.id,
+            customer_id=order_entity.customer_id,
             status=order_entity.status.value,
             total=order_entity.total,
             created_at=order_entity.created_at,
@@ -105,7 +105,7 @@ class OrderRepository(OrderRepositoryInterface):
         )
 
         if filters.customer_id:
-            where += (OrderModel.customer == filters.customer_id,)
+            where += (OrderModel.customer_id == filters.customer_id,)
 
         orders = (
             OrderModel.select()

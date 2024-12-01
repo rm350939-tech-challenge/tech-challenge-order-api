@@ -33,28 +33,28 @@ jobs:
       - name: Running coverage tests with pytest
         run: |
           pytest --cov=src/domain --cov=src/adapters --cov=src/ports --cov-report=xml tests/
-      
-      - uses: actions/upload-artifact@master
-        with:
-          name: coverage
-          path: coverage.xml
 
   sonar-cloud:
     name: SonarQube Cloud
     runs-on: ubuntu-latest
     needs: unit-tests
     steps:
-      - uses: actions/download-artifact@master
-        with:
-          name: coverage
-          path: coverage.xml
-
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v2
         with:
           fetch-depth: 0
-      
-      - name: SonarQube Cloud Scan
+
+      - name: Setup Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: ${{ matrix.python }}
+
+      - name: Install tox and any other packages
+        run: pip install tox
+
+      - name: Run tox
+        run: tox -e py
+
+      - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@master
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}

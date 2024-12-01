@@ -28,16 +28,8 @@ jobs:
         run: |
           pytest --cov=src/domain --cov=src/adapters --cov=src/ports --cov-report=term-missing tests/
       
-      - name: Baixar scanner do SonarQube
-        run: |
-          curl -sSLo sonar-scanner.zip https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.8.0.2856-linux.zip
-          unzip sonar-scanner.zip
-          mv sonar-scanner-4.8.0.2856-linux sonar-scanner
-  
-      - name: Adicionar scanner ao PATH
-        run: echo "$(pwd)/sonar-scanner/bin" >> $GITHUB_PATH
-  
-      - name: Executar análise do SonarQube
+      - name: SonarQube Scan
+        uses: sonarsource/sonarqube-scan-action@master
         env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        run: sonar-scanner
+          SONAR_TOKEN: ${{secrets.SONAR_TOKEN}}
+          SONAR_HOST_URL: "https://sonarcloud.io"

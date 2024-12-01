@@ -55,6 +55,7 @@ jobs:
         run: tox -e py
         
       - name: SonarCloud Scan
-        uses: SonarSource/sonarcloud-github-action@v1
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: |
+          sonar-scanner

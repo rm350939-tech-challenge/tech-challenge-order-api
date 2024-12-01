@@ -43,9 +43,14 @@ class OrderEntity:
     created_at: datetime = field(default=datetime.now(), kw_only=True)
     updated_at: datetime = field(default=None, kw_only=True)
 
-    def add_item(self, product_id: int, quantity: int, price: float, description: str = ""):
+    def add_item(
+        self, product_id: int, quantity: int, price: float, description: str = ""
+    ):
         order_item = OrderItemEntity(
-            product_id=product_id, quantity=quantity, description=description, price=price
+            product_id=product_id,
+            quantity=quantity,
+            description=description,
+            price=price,
         )
         self.items.append(order_item)
 

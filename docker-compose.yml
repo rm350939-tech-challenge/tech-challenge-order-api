@@ -1,0 +1,61 @@
+version: '3.8'
+
+services:
+  web:
+    build: .
+    container_name: foodapi_app
+    command: python main.py
+    volumes:
+      - ./src:/src
+    ports:
+      - "5000:5000"
+    depends_on:
+      db-postgres:
+        condition: service_healthy
+    environment:
+      - FLASK_ENV=development
+      - DATABASE_NAME=foodapi_db
+      - DATABASE_USER=postgres
+      - DATABASE_PASSWORD=postgres
+      - DATABASE_HOST=db-postgres
+      - DATABASE_PORT=5432
+      - DATABASE_SCHEMA_NAME=service_order
+
+  db-postgres:
+    image: postgres:13
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: foodapi_db
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U postgres" ]
+      interval: 5s
+      timeout: 5s
+      retries: 3
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+
+  db-pgadmin:
+    image: dpage/pgadmin4:latest
+    container_name: db-pgadmin
+    restart: always
+    depends_on:
+      - db-postgres
+    environment:
+      PGADMIN_DEFAULT_EMAIL: user@localhost.com
+      PGADMIN_DEFAULT_PASSWORD: password
+      PGADMIN_LISTEN_PORT: 80
+    ports:
+      - 15432:80
+    volumes:
+      - pgadmin:/var/lib/pgadmin
+
+volumes:
+  postgres_data:
+  pgadmin:
+
+# networks:
+#   default:
+#     name: local-network
+#     external: true

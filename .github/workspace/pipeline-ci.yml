@@ -54,8 +54,8 @@ jobs:
       - name: Run tox
         run: tox -e py
 
-      - name: Adicionar scanner ao PATH
-        run: echo "$(pwd)/sonar-scanner/bin" >> $GITHUB_PATH
+      - name: Fix coverage paths
+        run: sed -i 's|/github/workspace/||g' coverage.xml
         
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@master

@@ -179,3 +179,19 @@ def list_order():
         return jsonify({"error": err.message}), HTTPStatus.NOT_FOUND
     except Exception as err:
         return jsonify({"error": str(err)}), HTTPStatus.INTERNAL_SERVER_ERROR
+
+
+@order_api.route(
+    "/orders/<order_id>/status", methods=["PATCH"], endpoint="update_status"
+)
+def update_status(order_id: int):
+    try:
+        body = request.json
+        order = service.update_status_order(order_id, body["status"])
+        output = OutputOrderDTO.from_domain(order=order).to_dict()
+        return jsonify(output), HTTPStatus.CREATED
+    except EntityNotFoundException as err:
+        return jsonify({"error": err.message}), HTTPStatus.NOT_FOUND
+    except Exception as err:
+        print(err)
+        return jsonify({"error": str(err)}), HTTPStatus.INTERNAL_SERVER_ERROR

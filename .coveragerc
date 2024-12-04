@@ -1,4 +1,7 @@
 [run]
-source = ./src
+source = src
+branch = True
+relative_files = True
 
 [report]
+show_missing = True

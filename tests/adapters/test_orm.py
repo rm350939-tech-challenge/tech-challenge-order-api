@@ -2,7 +2,12 @@ from unittest.mock import MagicMock, patch
 from datetime import datetime
 import pytest
 from adapters.orm import OrderRepository, OrderModel, OrderItemModel, OrderSequenceModel
-from domain.entities import OrderEntity, OrderItemEntity, OrderSequenceEntity, OrderStatus
+from domain.entities import (
+    OrderEntity,
+    OrderItemEntity,
+    OrderSequenceEntity,
+    OrderStatus,
+)
 from domain.parameters import OrderFilters
 
 
@@ -135,7 +140,11 @@ def test_patch_order(mock_get_or_none, order_repository):
     mock_get_or_none.return_value = mock_order
 
     # Call repository method
-    result = order_repository.patch(order_id=1, status=OrderStatus.READY, updated_at=datetime(2023, 11, 30, 12, 0, 0))
+    result = order_repository.patch(
+        order_id=1,
+        status=OrderStatus.READY,
+        updated_at=datetime(2023, 11, 30, 12, 0, 0),
+    )
 
     # Assertions
     mock_get_or_none.assert_called_once_with(id=1)

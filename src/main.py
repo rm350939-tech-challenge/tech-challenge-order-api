@@ -1,5 +1,6 @@
 from http import HTTPStatus
 from flask import Flask, jsonify
+from flask_cors import CORS
 from flasgger import Swagger
 
 from dotenv import load_dotenv
@@ -9,6 +10,7 @@ load_dotenv()
 from adapters.http import order_api
 
 app = Flask("FoodAPI")
+CORS(app)
 swagger = Swagger(app)
 
 BASE_PATH = "/api/v1"
@@ -25,4 +27,4 @@ def root():
 
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000, debug=True)
+    app.run(host="0.0.0.0", port=5001, debug=True)

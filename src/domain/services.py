@@ -44,10 +44,10 @@ class OrderService:
     def update_status_order(self, order_id: int, status: OrderStatus) -> OrderEntity:
         updated_at = datetime.now()
         order = self._order_repository.patch(
-            order_id=order_id, updated_at=updated_at, status=status
+            order_id=order_id, updated_at=updated_at, status=OrderStatus[status].value
         )
         if not order:
-            raise EntityNotFoundException("Product not found.")
+            raise EntityNotFoundException("Order not found.")
         return order
 
     def _prepare_order_item(self, item: Dict) -> OrderItemEntity:

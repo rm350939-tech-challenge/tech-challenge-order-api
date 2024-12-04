@@ -1,6 +1,11 @@
 import pytest
 from datetime import datetime
-from domain.entities import OrderStatus, OrderItemEntity, OrderEntity, OrderSequenceEntity
+from domain.entities import (
+    OrderStatus,
+    OrderItemEntity,
+    OrderEntity,
+    OrderSequenceEntity,
+)
 
 
 def test_create_order_item_entity():

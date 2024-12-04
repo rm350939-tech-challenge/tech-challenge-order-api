@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tech-challenge-order-api
+  labels:
+    app: tech-challenge-order-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: tech-challenge-order-api
+  template:
+    metadata:
+      labels:
+        app: tech-challenge-order-api
+    spec:
+      containers:
+        - name: tech-challenge-order-api
+          image: jhonataneduardo/tech-challenge-order-api:v1
+          ports:
+            - containerPort: 5000
+          envFrom:
+            - configMapRef:
+                name: tech-challenge-order-api
+          resources:
+            requests:
+              memory: "128Mi"
+              cpu: "250m"
+            limits:
+              memory: "256Mi"
+              cpu: "500m"
+          # readinessProbe: # Verifica se o container está pronto para receber tráfego
+          #   httpGet:
+          #     path: /health
+          #     port: 5000
+          #   initialDelaySeconds: 5
+          #   periodSeconds: 10
+          # livenessProbe: # Verifica se o container está funcionando
+          #   httpGet:
+          #     path: /health
+          #     port: 5000
+          #   initialDelaySeconds: 10
+          #   periodSeconds: 20

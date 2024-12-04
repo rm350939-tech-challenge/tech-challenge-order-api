@@ -1,11 +1,9 @@
 from datetime import datetime
-import pytest
 from domain.entities import OrderEntity, OrderItemEntity, OrderStatus
 from adapters.dto import OrderItemDTO, OutputOrderDTO
 
 
 def test_order_item_dto_from_domain():
-    # Mocking an OrderItemEntity
     item_entity = OrderItemEntity(
         id=1,
         product_id=101,
@@ -16,10 +14,8 @@ def test_order_item_dto_from_domain():
         updated_at=datetime(2023, 11, 30, 12, 0, 0),
     )
 
-    # Converting to DTO
     item_dto = OrderItemDTO.from_domain(item_entity)
 
-    # Assertions
     assert item_dto.id == 1
     assert item_dto.product_id == 101
     assert item_dto.description == "Test Product"
@@ -28,7 +24,6 @@ def test_order_item_dto_from_domain():
 
 
 def test_output_order_dto_from_domain():
-    # Mocking OrderItemEntity
     item_entity = OrderItemEntity(
         id=1,
         product_id=101,
@@ -39,7 +34,6 @@ def test_output_order_dto_from_domain():
         updated_at=datetime(2023, 11, 30, 12, 0, 0),
     )
 
-    # Mocking OrderEntity
     order_entity = OrderEntity(
         id=1,
         number="P000001",
@@ -51,10 +45,8 @@ def test_output_order_dto_from_domain():
         updated_at=datetime(2023, 11, 30, 12, 0, 0),
     )
 
-    # Converting to DTO
     order_dto = OutputOrderDTO.from_domain(order_entity)
 
-    # Assertions
     assert order_dto.id == 1
     assert order_dto.number == "P000001"
     assert order_dto.customer_id == 123
@@ -67,7 +59,6 @@ def test_output_order_dto_from_domain():
 
 
 def test_output_order_dto_to_dict():
-    # Mocking OrderItemDTO
     item_dto = OrderItemDTO(
         id=1,
         product_id=101,
@@ -76,7 +67,6 @@ def test_output_order_dto_to_dict():
         quantity=2,
     )
 
-    # Mocking OutputOrderDTO
     order_dto = OutputOrderDTO(
         id=1,
         number="P000001",
@@ -88,10 +78,8 @@ def test_output_order_dto_to_dict():
         updated_at="2023-11-30T12:00:00Z",
     )
 
-    # Converting to dictionary
     order_dict = order_dto.to_dict()
 
-    # Assertions
     assert order_dict["id"] == 1
     assert order_dict["number"] == "P000001"
     assert order_dict["customer_id"] == 123
